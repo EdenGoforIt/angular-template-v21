@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { IConfiguration } from '@app/shared/models';
+import type { IConfiguration } from '@app/shared/models';
 
 import { Store } from '@ngrx/store';
 import { fromSetting } from '@store/setting';
@@ -23,10 +23,10 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 
         return next.handle(
           req.clone({
-            url: this.#replaceURL(baseUrls, req.url)
-          })
+            url: this.#replaceURL(baseUrls, req.url),
+          }),
         );
-      })
+      }),
     );
   }
 
