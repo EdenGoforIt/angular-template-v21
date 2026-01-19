@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -18,13 +18,14 @@ const baseUrlProvider = [{ provide: 'BASE_URL', useFactory: getBaseUrl, deps: []
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    // Zoneless change detection (Angular 21+)
+    provideZonelessChangeDetection(),
     // Animations
     provideAnimations(),
     // Http providers
     provideHttpClient(withInterceptorsFromDi()),
     ...httpInterceptorProviders,
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     ...baseUrlProvider,
   ],

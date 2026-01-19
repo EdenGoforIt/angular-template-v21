@@ -1,56 +1,9 @@
-.alertify {
-  z-index: 1001;
-  transition: none;
-  &-logs {
-    z-index: 9999;
-    &.alerts-update {
-      top: 10%;
-      left: 47%;
-    }
-  }
-  .dialog {
-    ul li {
-      text-align: left;
-    }
-    nav {
-      border-top: 1px solid #e0e0e0;
-    }
-    button {
-      color: #fff !important;
-      border: 1px solid #4cae4c !important;
-      &.ok {
-        background-color: #5cb85c !important;
-      }
-      &.ok:hover {
-        background-color: #47a447 !important;
-        border-color: #398439 !important;
-      }
-      &.cancel {
-        background-color: #343a40 !important;
-        border-color: #343a40 !important;
-        float: right;
-      }
-      &.cancel:hover {
-        background-color: #23272b !important;
-        border-color: #1d2124 !important;
-      }
-      &.cancel:empty {
-        display: none !important;
-      }
-    }
-  }
-}
+// Material Snackbar customization
 
 .mat-mdc-snack-bar-container {
   margin-bottom: 50px !important;
 }
 
-.mdc-snackbar__surface:not(.default) {
-  background-color: #47a447 !important;
-  border-color: #398439 !important;
-  text-align: center;
-}
 .mat-mdc-simple-snackbar {
   justify-content: center !important;
-  color: #fff !important;
 }
