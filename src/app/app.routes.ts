@@ -3,28 +3,20 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./features/home/home.component').then((m) => m.HomeComponent),
-  },
-  {
-    path: 'reactive-forms',
-    loadComponent: () =>
-      import('./features/reactive-forms-example/reactive-forms-example.component').then(
-        (m) => m.ReactiveFormsExampleComponent
-      ),
+    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'dynamic-forms',
     loadComponent: () =>
       import('./features/dynamic-forms-example/dynamic-forms-example.component').then(
-        (m) => m.DynamicFormsExampleComponent
+        (m) => m.DynamicFormsExampleComponent,
       ),
   },
   {
-    path: 'table',
+    path: 'access-denied',
     loadComponent: () =>
-      import('./features/table-example/table-example.component').then(
-        (m) => m.TableExampleComponent
+      import('./core/components/access-denied/access-denied.component').then(
+        (m) => m.AccessDeniedComponent,
       ),
   },
   {
