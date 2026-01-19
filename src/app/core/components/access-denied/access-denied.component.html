@@ -1,0 +1,57 @@
+<div class="access-denied-container">
+  <mat-card class="access-denied-card">
+    <mat-card-content>
+      <div class="icon-wrapper">
+        <mat-icon class="error-icon">block</mat-icon>
+      </div>
+
+      <h1 class="title">Access Denied</h1>
+
+      <p class="message">
+        You do not have permission to access this resource.
+      </p>
+
+      @if (isAuthenticated() && user()) {
+        <div class="user-info">
+          <mat-icon class="user-icon">person</mat-icon>
+          <div class="user-details">
+            <p class="user-name">
+              <strong>{{ user()?.name || user()?.email }}</strong>
+            </p>
+            <p class="user-email">{{ user()?.email }}</p>
+          </div>
+        </div>
+
+        <p class="info-text">
+          Your account does not have the required permissions to view this page.
+          Please contact your administrator if you believe this is an error.
+        </p>
+      } @else {
+        <p class="info-text">
+          You need to be authenticated with the proper permissions to access this resource.
+        </p>
+      }
+
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="goHome()"
+        >
+          <mat-icon>home</mat-icon>
+          Go to Home
+        </button>
+
+        @if (isAuthenticated()) {
+          <button
+            mat-stroked-button
+            (click)="onSignOut()"
+          >
+            <mat-icon>logout</mat-icon>
+            Sign Out
+          </button>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

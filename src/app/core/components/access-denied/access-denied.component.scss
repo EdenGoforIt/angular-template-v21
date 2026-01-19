@@ -1,0 +1,143 @@
+.access-denied-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.access-denied-card {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+  mat-card-content {
+    padding: 3rem 2rem;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .error-icon {
+    font-size: 6rem;
+    width: 6rem;
+    height: 6rem;
+    color: #ef4444;
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.message {
+  font-size: 1.25rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  margin: 2rem 0;
+
+  .user-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #6b7280;
+  }
+
+  .user-details {
+    text-align: left;
+
+    .user-name {
+      margin: 0;
+      font-size: 1.125rem;
+      color: #1f2937;
+    }
+
+    .user-email {
+      margin: 0.25rem 0 0 0;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  }
+}
+
+.info-text {
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+
+    mat-icon {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .access-denied-container {
+    padding: 1rem;
+  }
+
+  .access-denied-card {
+    mat-card-content {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .message {
+    font-size: 1.125rem;
+  }
+
+  .icon-wrapper {
+    .error-icon {
+      font-size: 4rem;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  .actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}
