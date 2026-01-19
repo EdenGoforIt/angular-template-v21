@@ -1,4 +1,7 @@
-@use '@angular/material/prebuilt-themes/deeppurple-amber.css';
+// Angular Material Theme
+@use './material-theme';
+
+// Project Styles
 @use './variables';
 @use './functions';
 @use './dialogs';
@@ -11,8 +14,6 @@
 @use './header';
 @use './material';
 @use './font';
-@use 'bootstrap/scss/bootstrap';
-@use '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
 :disabled {
   color: #8c8c8c !important;
 }

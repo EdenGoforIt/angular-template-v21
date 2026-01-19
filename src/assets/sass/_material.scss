@@ -132,26 +132,6 @@ mat-drawer.filters-side-nav {
   }
 }
 
-ngx-mat-datetime-content .mat-calendar-body-cell {
-  position: relative;
-  height: 0;
-  line-height: 0;
-  text-align: center;
-  outline: none;
-  cursor: pointer;
-  user-select: initial;
-}
-mat-datepicker-content .mat-calendar-body-cell {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  margin: 0;
-  line-height: 0;
-}
-
 .mat-mdc-form-field-hint {
   cursor: pointer;
   font-size: 0.8rem;
