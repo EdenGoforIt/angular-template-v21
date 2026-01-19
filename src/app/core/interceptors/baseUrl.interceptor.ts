@@ -2,19 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import type { IConfiguration } from '@app/shared/models';
-
-import { Store } from '@ngrx/store';
-import { fromSetting } from '@store/setting';
-import { SettingState } from '@store/setting/setting.reducers';
+import { SettingStore } from '@store/setting.store';
 import { first, mergeMap, Observable } from 'rxjs';
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
-  readonly #store = inject(Store<SettingState>);
+  readonly #settingStore = inject(SettingStore);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.#store.select(fromSetting.apiUrls).pipe(
+    return toObservable(this.#settingStore.apiUrls).pipe(
       first(),
       mergeMap((baseUrls) => {
         if (!baseUrls || this.#noNeedReplacingUrl(req.url)) {

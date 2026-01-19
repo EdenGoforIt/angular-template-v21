@@ -2,17 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { fromAuth } from '@store/auth';
-import { AuthState } from '@store/auth/auth.reducers';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { AuthStore } from '@store/auth.store';
 import { first, mergeMap, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  #store = inject(Store<AuthState>);
+  readonly #authStore = inject(AuthStore);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.#store.select(fromAuth.token).pipe(
+    return toObservable(this.#authStore.token).pipe(
       first(),
       mergeMap((token) => {
         if (this.#noNeedToken(req.url)) {
