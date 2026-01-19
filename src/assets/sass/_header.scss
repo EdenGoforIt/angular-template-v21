@@ -1,0 +1,25 @@
+@use 'functions';
+@use 'variables';
+
+.panel-content {
+  margin-left: 10px;
+}
+
+.header-content {
+  margin: 20px;
+}
+
+#headerForm {
+  height: functions.enlarge-container-height(27px);
+  font-size: 0.8rem !important;
+
+  overflow-x: hidden;
+
+  .mat-expansion-panel {
+    border-radius: 0px;
+
+    .mat-expansion-panel-content {
+      font-size: 0.8rem !important;
+    }
+  }
+}

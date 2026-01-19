@@ -1,0 +1,5 @@
+@use 'variables';
+
+.font-light-gray {
+  color: variables.$light-grey;
+}

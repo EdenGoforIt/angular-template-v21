@@ -1,0 +1,32 @@
+@use './variables';
+
+#breadcrumb {
+  height: 30px;
+  position: absolute;
+  top: 15px;
+  left: 220px;
+  color: #c0c0c0;
+  font-size: 16px;
+
+  a {
+    font-size: 16px;
+    color: #c0c0c0;
+  }
+}
+
+mat-sidenav-container {
+  margin-top: 5px;
+
+  mat-sidenav {
+    box-shadow: 0px 0px 1px variables.$shade;
+
+    &:not(.slim) {
+      width: 250px;
+    }
+
+    &.slim {
+      width: 64px;
+      text-align: center;
+    }
+  }
+}

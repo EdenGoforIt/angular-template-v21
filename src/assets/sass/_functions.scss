@@ -1,0 +1,9 @@
+@use './variables';
+
+@function reduce-container-height($val) {
+  @return calc(100vh - #{variables.$view-container-surplus} - #{$val});
+}
+
+@function enlarge-container-height($val) {
+  @return calc(100vh - #{variables.$view-container-surplus} + #{$val});
+}

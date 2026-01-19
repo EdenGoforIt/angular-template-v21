@@ -1,0 +1,26 @@
+@use './variables';
+
+mat-form-field .mat-form-field-required-marker {
+  color: variables.$light-red !important;
+}
+
+// Inline table as primary checkbox
+.mat-mdc-checkbox-checked:not(.mat-mdc-checkbox-disabled) {
+  &.mat-primary .mdc-checkbox__background {
+    background-color: variables.$dark-blue !important;
+    border-color: variables.$dark-blue !important;
+  }
+}
+
+.mat-mdc-checkbox-checked.mat-primary .mat-ripple-element {
+  background: variables.$dark-blue !important;
+}
+
+.mat-select-panel.expanded-panel {
+  max-width: 100% !important;
+  width: auto !important;
+}
+
+.mat-mdc-form-field-required-marker {
+  color: variables.$text-danger !important;
+}

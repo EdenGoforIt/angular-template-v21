@@ -1,0 +1,81 @@
+$actions-footer-height: 32px;
+
+.large-dialog .mat-mdc-dialog-container {
+  width: calc(1000px + 5vw);
+  min-height: 500px;
+}
+.dialog-content {
+  padding: 20px;
+}
+mat-dialog-container {
+  position: relative !important;
+
+  form,
+  .mat-tab-group,
+  .mat-tab-body-wrapper {
+    height: 100%;
+  }
+
+  .mat-dialog-content {
+    border-radius: 2px;
+    height: calc(100% - #{$actions-footer-height});
+  }
+
+  // fix buttons at the bottom right
+  .dialog-actions {
+    width: 100%;
+    text-align: right;
+    z-index: 1009;
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+  }
+
+  .dialog-header {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+
+    .dialog-header__title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 9px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .dialog-header__close-button {
+      font-weight: 700;
+      cursor: pointer;
+      top: 16px;
+      right: 20px;
+      position: absolute;
+    }
+  }
+}
+
+.history-dialog .mat-dialog-container {
+  width: 700px;
+  top: -80px;
+}
+
+.advanced-search-dialog {
+  width: 800px;
+  top: 53px;
+  position: inherit !important;
+}
+
+.user-detail-dialog .mat-dialog-container {
+  width: 900px;
+  top: -80px;
+}
+
+.dialog-content {
+  .dialog-content__buttons {
+    display: flex;
+    align-items: flex-end;
+    margin-right: 10px;
+    margin-top: 0.25rem;
+    width: 100%;
+  }
+}

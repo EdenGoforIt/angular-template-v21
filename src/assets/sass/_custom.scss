@@ -1,0 +1,136 @@
+@use './variables';
+
+button.btn {
+  // overwrite default radius of 4px
+  border-radius: 3px !important;
+}
+
+.list-striped:nth-of-type(odd) {
+  background-color: variables.$striped-color;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+// custom colors
+.mat-green {
+  background-color: variables.$dark-green !important;
+  color: #fff !important;
+
+  &.mat-icon {
+    background-color: #fff !important;
+    color: variables.$dark-green !important;
+  }
+}
+
+.mat-blue {
+  background-color: variables.$dark-blue !important;
+  color: #fff !important;
+
+  &.mat-icon {
+    background-color: #fff !important;
+    color: variables.$dark-blue !important;
+  }
+}
+
+.mat-orange {
+  background-color: variables.$orange;
+  color: #fff;
+
+  &.mat-icon {
+    background-color: #fff;
+    color: variables.$orange;
+  }
+}
+
+.mat-maroon {
+  background-color: variables.$dark-red;
+  color: #fff;
+
+  &.mat-icon {
+    background-color: #fff;
+    color: variables.$dark-red;
+  }
+}
+
+.mat-dark {
+  background-color: #000;
+  color: #fff;
+}
+
+.mat-tooltip {
+  font-size: 12px !important;
+}
+
+.badge-primary {
+  background-color: variables.$dark-blue !important;
+}
+
+.mat-hint {
+  b {
+    font-weight: 500;
+  }
+}
+
+.tag-span {
+  color: #fff !important;
+  font-weight: normal !important;
+  border-radius: 4px !important;
+  padding: 5px 10px;
+  margin-left: 15px;
+  text-transform: uppercase;
+  background-color: variables.$grey-status;
+}
+
+.comm-item-tab-content {
+  margin: 20px 0;
+}
+
+.margin-left-auto {
+  margin-left: auto;
+}
+
+.h-500 {
+  height: 500px;
+}
+.ps-46 {
+  padding-left: 46% !important;
+}
+
+.justify-content-right {
+  justify-content: right;
+}
+
+.required-asterisk {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.overlay-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.1);
+}

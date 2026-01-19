@@ -1,0 +1,87 @@
+@use '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@use './variables';
+@use './functions';
+@use './dialogs';
+@use './fields';
+@use './table';
+@use './view';
+@use './custom';
+@use './nav';
+@use './alert';
+@use './header';
+@use './material';
+@use './font';
+@use 'bootstrap/scss/bootstrap';
+@use '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
+:disabled {
+  color: #8c8c8c !important;
+}
+
+.cdk-global-scrollblock {
+  overflow: hidden !important;
+}
+
+h6.title-hr {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+
+  span {
+    background: #fff;
+    padding: 0 10px;
+  }
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.col-center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 500px;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.border-box {
+  box-sizing: border-box;
+}
+
+.anchor {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+// fieldset and legend back to an old style
+fieldset,
+legend {
+  all: revert;
+}
+
+.reset {
+  all: revert;
+}
+
+.breadcrumb__link {
+  color: variables.$light-grey;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
