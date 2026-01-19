@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+main {
+  padding: 0;
+  height: calc(100vh - 30px);
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  background-color: black;
+}
