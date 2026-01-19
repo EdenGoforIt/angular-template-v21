@@ -4,6 +4,7 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -17,6 +18,8 @@ const baseUrlProvider = [{ provide: 'BASE_URL', useFactory: getBaseUrl, deps: []
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    // Animations
+    provideAnimations(),
     // Http providers
     provideHttpClient(withInterceptorsFromDi()),
     ...httpInterceptorProviders,
