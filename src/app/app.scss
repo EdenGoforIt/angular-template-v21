@@ -30,7 +30,7 @@
   transition: color 0.2s;
 
   &:hover {
-    color: #60a5fa;
+    color: #9575cd; // Deep Purple 300
   }
 }
 
@@ -62,7 +62,7 @@
 
   &.navbar__link--active {
     color: white;
-    border-bottom-color: #3b82f6;
+    border-bottom-color: #673ab7; // Deep Purple 500
   }
 }
 
