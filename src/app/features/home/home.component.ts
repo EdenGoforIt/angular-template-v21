@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 import { SelectOption } from '@models/form-field.model';
-import { CheckboxInputComponent } from '@shared/components/checkbox-input/checkbox-input.component';
-import { NumberInputComponent } from '@shared/components/number-input/number-input.component';
-import { RadioInputComponent } from '@shared/components/radio-input/radio-input.component';
-import { TextInputComponent } from '@shared/components/text-input/text-input.component';
-import { TextareaInputComponent } from '@shared/components/textarea-input/textarea-input.component';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +14,11 @@ import { TextareaInputComponent } from '@shared/components/textarea-input/textar
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TextInputComponent,
-    NumberInputComponent,
-    TextareaInputComponent,
-    CheckboxInputComponent,
-    RadioInputComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatButtonModule,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
