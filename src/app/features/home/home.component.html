@@ -1,96 +1,104 @@
 <div class="page-container p-5">
   <h1>Reactive Forms Example</h1>
   <p class="description">
-    This page demonstrates reactive form components with signal-based state management.
+    This page demonstrates reactive form components with signal-based state management using Angular Material.
   </p>
 
   <div class="form-container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <h2>User Registration Form</h2>
 
-      <app-text-input
-        id="firstName"
-        label="First Name"
-        type="text"
-        placeholder="Enter your first name"
-        [required]="true"
-        [errors]="getFieldErrors('firstName')"
-        formControlName="firstName"
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="Enter your first name" formControlName="firstName" required>
+        <mat-error *ngIf="userForm.get('firstName')?.hasError('required')">
+          First Name is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('firstName')?.hasError('minlength')">
+          First Name must be at least 2 characters
+        </mat-error>
+      </mat-form-field>
 
-      <app-text-input
-        id="lastName"
-        label="Last Name"
-        type="text"
-        placeholder="Enter your last name"
-        [required]="true"
-        [errors]="getFieldErrors('lastName')"
-        formControlName="lastName"
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Enter your last name" formControlName="lastName" required>
+        <mat-error *ngIf="userForm.get('lastName')?.hasError('required')">
+          Last Name is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('lastName')?.hasError('minlength')">
+          Last Name must be at least 2 characters
+        </mat-error>
+      </mat-form-field>
 
-      <app-text-input
-        id="email"
-        label="Email"
-        type="email"
-        placeholder="your.email@example.com"
-        [required]="true"
-        helpText="We'll never share your email with anyone else."
-        [errors]="getFieldErrors('email')"
-        formControlName="email"
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="your.email@example.com" formControlName="email" required>
+        <mat-hint>We'll never share your email with anyone else.</mat-hint>
+        <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
 
-      <app-number-input
-        id="age"
-        label="Age"
-        placeholder="Enter your age"
-        [required]="true"
-        [min]="18"
-        [max]="120"
-        helpText="You must be at least 18 years old."
-        [errors]="getFieldErrors('age')"
-        formControlName="age"
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" placeholder="Enter your age" formControlName="age" required>
+        <mat-hint>You must be at least 18 years old.</mat-hint>
+        <mat-error *ngIf="userForm.get('age')?.hasError('required')">
+          Age is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('age')?.hasError('min')">
+          Age must be at least 18
+        </mat-error>
+        <mat-error *ngIf="userForm.get('age')?.hasError('max')">
+          Age must not exceed 120
+        </mat-error>
+      </mat-form-field>
 
-      <app-radio-input
-        id="gender"
-        name="gender"
-        label="Gender"
-        [required]="true"
-        [options]="genderOptions()"
-        [errors]="getFieldErrors('gender')"
-        formControlName="gender"
-      />
+      <div class="form-field-wrapper">
+        <label class="form-label">Gender <span class="required">*</span></label>
+        <mat-radio-group formControlName="gender" class="radio-group">
+          <mat-radio-button *ngFor="let option of genderOptions()" [value]="option.value">
+            {{ option.label }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="userForm.get('gender')?.hasError('required') && userForm.get('gender')?.touched">
+          Gender is required
+        </mat-error>
+      </div>
 
-      <app-textarea-input
-        id="bio"
-        label="Bio"
-        placeholder="Tell us about yourself..."
-        [rows]="5"
-        helpText="Write a short bio (max 500 characters)"
-        [errors]="getFieldErrors('bio')"
-        formControlName="bio"
-      />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Bio</mat-label>
+        <textarea matInput placeholder="Tell us about yourself..." formControlName="bio" rows="5"></textarea>
+        <mat-hint>Write a short bio (max 500 characters)</mat-hint>
+        <mat-error *ngIf="userForm.get('bio')?.hasError('maxlength')">
+          Bio must not exceed 500 characters
+        </mat-error>
+      </mat-form-field>
 
-      <app-checkbox-input
-        id="agreeToTerms"
-        label="I agree to the terms and conditions"
-        [required]="true"
-        [errors]="getFieldErrors('agreeToTerms')"
-        formControlName="agreeToTerms"
-      />
+      <div class="checkbox-wrapper">
+        <mat-checkbox formControlName="agreeToTerms" required>
+          I agree to the terms and conditions
+        </mat-checkbox>
+        <mat-error *ngIf="userForm.get('agreeToTerms')?.hasError('required') && userForm.get('agreeToTerms')?.touched">
+          You must agree to the terms and conditions
+        </mat-error>
+      </div>
 
-      <app-checkbox-input
-        id="newsletter"
-        label="Subscribe to newsletter"
-        helpText="Receive updates about new features and announcements"
-        formControlName="newsletter"
-      />
+      <div class="checkbox-wrapper">
+        <mat-checkbox formControlName="newsletter">
+          Subscribe to newsletter
+        </mat-checkbox>
+        <div class="help-text">Receive updates about new features and announcements</div>
+      </div>
 
       <div class="form-actions">
-        <button type="submit" [disabled]="userForm.invalid || submitting()" class="btn btn-primary">
+        <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid || submitting()">
           {{ submitting() ? 'Submitting...' : 'Submit' }}
         </button>
-        <button type="button" (click)="onReset()" class="btn btn-secondary">Reset</button>
+        <button mat-raised-button type="button" (click)="onReset()">Reset</button>
       </div>
     </form>
 
