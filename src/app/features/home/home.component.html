@@ -1,109 +1,102 @@
-<div class="page-container">
-      <h1>Reactive Forms Example</h1>
-      <p class="description">
-        This page demonstrates reactive form components with signal-based state
-        management.
-      </p>
+<div class="page-container p-5">
+  <h1>Reactive Forms Example</h1>
+  <p class="description">
+    This page demonstrates reactive form components with signal-based state management.
+  </p>
 
-      <div class="form-container">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-          <h2>User Registration Form</h2>
+  <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <h2>User Registration Form</h2>
 
-          <app-text-input
-            id="firstName"
-            label="First Name"
-            type="text"
-            placeholder="Enter your first name"
-            [required]="true"
-            [errors]="getFieldErrors('firstName')"
-            formControlName="firstName"
-          />
+      <app-text-input
+        id="firstName"
+        label="First Name"
+        type="text"
+        placeholder="Enter your first name"
+        [required]="true"
+        [errors]="getFieldErrors('firstName')"
+        formControlName="firstName"
+      />
 
-          <app-text-input
-            id="lastName"
-            label="Last Name"
-            type="text"
-            placeholder="Enter your last name"
-            [required]="true"
-            [errors]="getFieldErrors('lastName')"
-            formControlName="lastName"
-          />
+      <app-text-input
+        id="lastName"
+        label="Last Name"
+        type="text"
+        placeholder="Enter your last name"
+        [required]="true"
+        [errors]="getFieldErrors('lastName')"
+        formControlName="lastName"
+      />
 
-          <app-text-input
-            id="email"
-            label="Email"
-            type="email"
-            placeholder="your.email@example.com"
-            [required]="true"
-            helpText="We'll never share your email with anyone else."
-            [errors]="getFieldErrors('email')"
-            formControlName="email"
-          />
+      <app-text-input
+        id="email"
+        label="Email"
+        type="email"
+        placeholder="your.email@example.com"
+        [required]="true"
+        helpText="We'll never share your email with anyone else."
+        [errors]="getFieldErrors('email')"
+        formControlName="email"
+      />
 
-          <app-number-input
-            id="age"
-            label="Age"
-            placeholder="Enter your age"
-            [required]="true"
-            [min]="18"
-            [max]="120"
-            helpText="You must be at least 18 years old."
-            [errors]="getFieldErrors('age')"
-            formControlName="age"
-          />
+      <app-number-input
+        id="age"
+        label="Age"
+        placeholder="Enter your age"
+        [required]="true"
+        [min]="18"
+        [max]="120"
+        helpText="You must be at least 18 years old."
+        [errors]="getFieldErrors('age')"
+        formControlName="age"
+      />
 
-          <app-radio-input
-            id="gender"
-            name="gender"
-            label="Gender"
-            [required]="true"
-            [options]="genderOptions()"
-            [errors]="getFieldErrors('gender')"
-            formControlName="gender"
-          />
+      <app-radio-input
+        id="gender"
+        name="gender"
+        label="Gender"
+        [required]="true"
+        [options]="genderOptions()"
+        [errors]="getFieldErrors('gender')"
+        formControlName="gender"
+      />
 
-          <app-textarea-input
-            id="bio"
-            label="Bio"
-            placeholder="Tell us about yourself..."
-            [rows]="5"
-            helpText="Write a short bio (max 500 characters)"
-            [errors]="getFieldErrors('bio')"
-            formControlName="bio"
-          />
+      <app-textarea-input
+        id="bio"
+        label="Bio"
+        placeholder="Tell us about yourself..."
+        [rows]="5"
+        helpText="Write a short bio (max 500 characters)"
+        [errors]="getFieldErrors('bio')"
+        formControlName="bio"
+      />
 
-          <app-checkbox-input
-            id="agreeToTerms"
-            label="I agree to the terms and conditions"
-            [required]="true"
-            [errors]="getFieldErrors('agreeToTerms')"
-            formControlName="agreeToTerms"
-          />
+      <app-checkbox-input
+        id="agreeToTerms"
+        label="I agree to the terms and conditions"
+        [required]="true"
+        [errors]="getFieldErrors('agreeToTerms')"
+        formControlName="agreeToTerms"
+      />
 
-          <app-checkbox-input
-            id="newsletter"
-            label="Subscribe to newsletter"
-            helpText="Receive updates about new features and announcements"
-            formControlName="newsletter"
-          />
+      <app-checkbox-input
+        id="newsletter"
+        label="Subscribe to newsletter"
+        helpText="Receive updates about new features and announcements"
+        formControlName="newsletter"
+      />
 
-          <div class="form-actions">
-            <button
-              type="submit"
-              [disabled]="userForm.invalid || submitting()"
-              class="btn btn-primary"
-            >
-              {{ submitting() ? 'Submitting...' : 'Submit' }}
-            </button>
-            <button type="button" (click)="onReset()" class="btn btn-secondary">
-              Reset
-            </button>
-          </div>
-        </form>
-
-        <div *ngIf="submittedData()" class="result-panel">
-          <h3>Submitted Data:</h3>
-          <pre>{{ submittedData() | json }}</pre>
-        </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="userForm.invalid || submitting()" class="btn btn-primary">
+          {{ submitting() ? 'Submitting...' : 'Submit' }}
+        </button>
+        <button type="button" (click)="onReset()" class="btn btn-secondary">Reset</button>
       </div>
+    </form>
+
+    <div *ngIf="submittedData()" class="result-panel">
+      <h3>Submitted Data:</h3>
+      <pre>{{ submittedData() | json }}</pre>
     </div>
+  </div>
+</div>

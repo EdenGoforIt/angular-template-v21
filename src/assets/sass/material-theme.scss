@@ -3,9 +3,9 @@
 // Include the common styles for Angular Material
 @include mat.core();
 
-// Define your application's custom theme
-$primary-palette: mat.$azure-palette;
-$accent-palette: mat.$blue-palette;
+// Define your application's custom theme - Purple Theme
+$primary-palette: mat.$violet-palette;
+$accent-palette: mat.$magenta-palette;
 $warn-palette: mat.$red-palette;
 
 // Create the theme object
