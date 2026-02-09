@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +12,7 @@ import { SelectOption } from '@models/form-field.model';
   selector: 'app-home',
   standalone: true,
   imports: [
+    JsonPipe,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
