@@ -10,7 +10,6 @@ import { SelectOption } from '@models/form-field.model';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [
     JsonPipe,
     ReactiveFormsModule,
@@ -21,7 +20,7 @@ import { SelectOption } from '@models/form-field.model';
     MatButtonModule,
   ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   private fb = new FormBuilder();
