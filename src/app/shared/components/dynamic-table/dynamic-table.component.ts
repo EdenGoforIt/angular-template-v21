@@ -1,216 +1,222 @@
 import { Component, input, output, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableStore } from '@store/table.store';
 import { TableColumn, TableAction } from '@models/table.model';
 
 @Component({
   selector: 'app-dynamic-table',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   template: `
     <div class="table-container">
       <!-- Loading State -->
-      <div *ngIf="tableStore.loading()" class="loading">Loading...</div>
+      @if (tableStore.loading()) {
+        <div class="loading">Loading...</div>
+      }
 
       <!-- Error State -->
-      <div *ngIf="tableStore.error()" class="error">{{ tableStore.error() }}</div>
+      @if (tableStore.error()) {
+        <div class="error">{{ tableStore.error() }}</div>
+      }
 
       <!-- Filters -->
-      <div
-        *ngIf="tableStore.config().filtering?.enabled"
-        class="filters"
-      >
-        <div *ngFor="let column of filterableColumns()" class="filter-field">
-          <label [for]="'filter-' + column.key">{{ column.label }}</label>
-          <input
-            [id]="'filter-' + column.key"
-            type="text"
-            [(ngModel)]="filters[column.key]"
-            (ngModelChange)="onFilterChange(column.key, $event)"
-            placeholder="Filter {{ column.label }}..."
-            class="filter-input"
-          />
+      @if (tableStore.config().filtering?.enabled) {
+        <div class="filters">
+          @for (column of filterableColumns(); track column.key) {
+            <div class="filter-field">
+              <label [for]="'filter-' + column.key">{{ column.label }}</label>
+              <input
+                [id]="'filter-' + column.key"
+                type="text"
+                [(ngModel)]="filters[column.key]"
+                (ngModelChange)="onFilterChange(column.key, $event)"
+                placeholder="Filter {{ column.label }}..."
+                class="filter-input"
+              />
+            </div>
+          }
+          @if (hasActiveFilters()) {
+            <button
+              (click)="clearFilters()"
+              class="btn btn-clear"
+            >
+              Clear Filters
+            </button>
+          }
         </div>
-        <button
-          *ngIf="hasActiveFilters()"
-          (click)="clearFilters()"
-          class="btn btn-clear"
-        >
-          Clear Filters
-        </button>
-      </div>
+      }
 
       <!-- Table -->
       <div class="table-wrapper">
         <table class="table">
           <thead>
             <tr>
-              <th *ngIf="tableStore.config().selectable" class="select-column">
-                <input
-                  type="checkbox"
-                  [checked]="isAllSelected()"
-                  (change)="onSelectAll($event)"
-                />
-              </th>
-              <th
-                *ngFor="let column of tableStore.config().columns"
-                [class.sortable]="column.sortable"
-                [style.width]="column.width"
-                [style.text-align]="column.align || 'left'"
-                (click)="column.sortable && onSort(column.key)"
-              >
-                {{ column.label }}
-                <span
-                  *ngIf="
-                    column.sortable &&
-                    tableStore.config().sorting?.column === column.key
-                  "
-                  class="sort-icon"
+              @if (tableStore.config().selectable) {
+                <th class="select-column">
+                  <input
+                    type="checkbox"
+                    [checked]="isAllSelected()"
+                    (change)="onSelectAll($event)"
+                  />
+                </th>
+              }
+              @for (column of tableStore.config().columns; track column.key) {
+                <th
+                  [class.sortable]="column.sortable"
+                  [style.width]="column.width"
+                  [style.text-align]="column.align || 'left'"
+                  (click)="column.sortable && onSort(column.key)"
                 >
-                  {{
-                    tableStore.config().sorting?.direction === 'asc' ? '↑' : '↓'
-                  }}
-                </span>
-              </th>
-              <th
-                *ngIf="tableStore.config().actions && tableStore.config().actions!.length > 0"
-                class="actions-column"
-              >
-                Actions
-              </th>
+                  {{ column.label }}
+                  @if (column.sortable && tableStore.config().sorting?.column === column.key) {
+                    <span class="sort-icon">
+                      {{
+                        tableStore.config().sorting?.direction === 'asc' ? '↑' : '↓'
+                      }}
+                    </span>
+                  }
+                </th>
+              }
+              @if (tableStore.config().actions && tableStore.config().actions!.length > 0) {
+                <th class="actions-column">
+                  Actions
+                </th>
+              }
             </tr>
           </thead>
           <tbody>
-            <tr *ngIf="tableStore.paginatedData().data.length === 0">
-              <td
-                [colSpan]="
-                  tableStore.config().columns.length +
-                  (tableStore.config().selectable ? 1 : 0) +
-                  (tableStore.config().actions?.length ? 1 : 0)
-                "
-                class="no-data"
-              >
-                No data available
-              </td>
-            </tr>
-            <tr *ngFor="let row of tableStore.paginatedData().data">
-              <td *ngIf="tableStore.config().selectable" class="select-column">
-                <input
-                  type="checkbox"
-                  [checked]="isRowSelected(row)"
-                  (change)="onSelectRow(row)"
-                />
-              </td>
-              <td
-                *ngFor="let column of tableStore.config().columns"
-                [style.text-align]="column.align || 'left'"
-              >
-                {{ formatCellValue(row, column) }}
-              </td>
-              <td
-                *ngIf="tableStore.config().actions && tableStore.config().actions!.length > 0"
-                class="actions-column"
-              >
-                <button
-                  *ngFor="let action of getRowActions(row)"
-                  (click)="action.callback(row)"
-                  class="btn btn-action"
-                  [title]="action.label"
+            @if (tableStore.paginatedData().data.length === 0) {
+              <tr>
+                <td
+                  [colSpan]="
+                    tableStore.config().columns.length +
+                    (tableStore.config().selectable ? 1 : 0) +
+                    (tableStore.config().actions?.length ? 1 : 0)
+                  "
+                  class="no-data"
                 >
-                  {{ action.icon || action.label }}
-                </button>
-              </td>
-            </tr>
+                  No data available
+                </td>
+              </tr>
+            }
+            @for (row of tableStore.paginatedData().data; track $index) {
+              <tr>
+                @if (tableStore.config().selectable) {
+                  <td class="select-column">
+                    <input
+                      type="checkbox"
+                      [checked]="isRowSelected(row)"
+                      (change)="onSelectRow(row)"
+                    />
+                  </td>
+                }
+                @for (column of tableStore.config().columns; track column.key) {
+                  <td [style.text-align]="column.align || 'left'">
+                    {{ formatCellValue(row, column) }}
+                  </td>
+                }
+                @if (tableStore.config().actions && tableStore.config().actions!.length > 0) {
+                  <td class="actions-column">
+                    @for (action of getRowActions(row); track action.label) {
+                      <button
+                        (click)="action.callback(row)"
+                        class="btn btn-action"
+                        [title]="action.label"
+                      >
+                        {{ action.icon || action.label }}
+                      </button>
+                    }
+                  </td>
+                }
+              </tr>
+            }
           </tbody>
         </table>
       </div>
 
       <!-- Pagination -->
-      <div
-        *ngIf="tableStore.config().pagination?.enabled"
-        class="pagination"
-      >
-        <div class="pagination-info">
-          Showing
-          {{
-            (tableStore.config().pagination!.currentPage - 1) *
-              tableStore.config().pagination!.pageSize +
-              1
-          }}
-          to
-          {{
-            Math.min(
-              tableStore.config().pagination!.currentPage *
-                tableStore.config().pagination!.pageSize,
-              tableStore.paginatedData().totalItems
-            )
-          }}
-          of {{ tableStore.paginatedData().totalItems }} entries
+      @if (tableStore.config().pagination?.enabled) {
+        <div class="pagination">
+          <div class="pagination-info">
+            Showing
+            {{
+              (tableStore.config().pagination!.currentPage - 1) *
+                tableStore.config().pagination!.pageSize +
+                1
+            }}
+            to
+            {{
+              Math.min(
+                tableStore.config().pagination!.currentPage *
+                  tableStore.config().pagination!.pageSize,
+                tableStore.paginatedData().totalItems
+              )
+            }}
+            of {{ tableStore.paginatedData().totalItems }} entries
+          </div>
+
+          <div class="pagination-controls">
+            <button
+              (click)="goToPage(1)"
+              [disabled]="tableStore.config().pagination!.currentPage === 1"
+              class="btn btn-pagination"
+            >
+              First
+            </button>
+            <button
+              (click)="
+                goToPage(tableStore.config().pagination!.currentPage - 1)
+              "
+              [disabled]="tableStore.config().pagination!.currentPage === 1"
+              class="btn btn-pagination"
+            >
+              Previous
+            </button>
+
+            <span class="page-numbers">
+              Page {{ tableStore.config().pagination!.currentPage }} of
+              {{ tableStore.totalPages() }}
+            </span>
+
+            <button
+              (click)="
+                goToPage(tableStore.config().pagination!.currentPage + 1)
+              "
+              [disabled]="
+                tableStore.config().pagination!.currentPage ===
+                tableStore.totalPages()
+              "
+              class="btn btn-pagination"
+            >
+              Next
+            </button>
+            <button
+              (click)="goToPage(tableStore.totalPages())"
+              [disabled]="
+                tableStore.config().pagination!.currentPage ===
+                tableStore.totalPages()
+              "
+              class="btn btn-pagination"
+            >
+              Last
+            </button>
+          </div>
+
+          <div class="page-size-selector">
+            <label for="pageSize">Items per page:</label>
+            <select
+              id="pageSize"
+              [(ngModel)]="pageSize"
+              (ngModelChange)="onPageSizeChange($event)"
+              class="page-size-select"
+            >
+              <option [value]="10">10</option>
+              <option [value]="25">25</option>
+              <option [value]="50">50</option>
+              <option [value]="100">100</option>
+            </select>
+          </div>
         </div>
-
-        <div class="pagination-controls">
-          <button
-            (click)="goToPage(1)"
-            [disabled]="tableStore.config().pagination!.currentPage === 1"
-            class="btn btn-pagination"
-          >
-            First
-          </button>
-          <button
-            (click)="
-              goToPage(tableStore.config().pagination!.currentPage - 1)
-            "
-            [disabled]="tableStore.config().pagination!.currentPage === 1"
-            class="btn btn-pagination"
-          >
-            Previous
-          </button>
-
-          <span class="page-numbers">
-            Page {{ tableStore.config().pagination!.currentPage }} of
-            {{ tableStore.totalPages() }}
-          </span>
-
-          <button
-            (click)="
-              goToPage(tableStore.config().pagination!.currentPage + 1)
-            "
-            [disabled]="
-              tableStore.config().pagination!.currentPage ===
-              tableStore.totalPages()
-            "
-            class="btn btn-pagination"
-          >
-            Next
-          </button>
-          <button
-            (click)="goToPage(tableStore.totalPages())"
-            [disabled]="
-              tableStore.config().pagination!.currentPage ===
-              tableStore.totalPages()
-            "
-            class="btn btn-pagination"
-          >
-            Last
-          </button>
-        </div>
-
-        <div class="page-size-selector">
-          <label for="pageSize">Items per page:</label>
-          <select
-            id="pageSize"
-            [(ngModel)]="pageSize"
-            (ngModelChange)="onPageSizeChange($event)"
-            class="page-size-select"
-          >
-            <option [value]="10">10</option>
-            <option [value]="25">25</option>
-            <option [value]="50">50</option>
-            <option [value]="100">100</option>
-          </select>
-        </div>
-      </div>
+      }
     </div>
   `,
   styles: [

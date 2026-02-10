@@ -1,5 +1,4 @@
 import { Component, input, output, effect, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormFieldConfig } from '@models/form-field.model';
 import { TextInputComponent } from '../text-input/text-input.component';
@@ -10,9 +9,7 @@ import { RadioInputComponent } from '../radio-input/radio-input.component';
 
 @Component({
   selector: 'app-dynamic-form',
-  standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TextInputComponent,
     NumberInputComponent,
@@ -22,74 +19,76 @@ import { RadioInputComponent } from '../radio-input/radio-input.component';
   ],
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="dynamic-form">
-      <div *ngFor="let field of fields()" class="form-field">
-        <!-- Text Input -->
-        <app-text-input
-          *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'password'"
-          [id]="field.id"
-          [label]="field.label"
-          [type]="field.type"
-          [placeholder]="field.placeholder || ''"
-          [helpText]="field.helpText || ''"
-          [required]="field.validation?.required || false"
-          [readonly]="field.readonly || false"
-          [errors]="getFieldErrors(field.id)"
-          [formControlName]="field.id"
-        />
+      @for (field of fields(); track field.id) {
+        <div class="form-field">
+          @if (field.type === 'text' || field.type === 'email' || field.type === 'password') {
+            <app-text-input
+              [id]="field.id"
+              [label]="field.label"
+              [type]="field.type"
+              [placeholder]="field.placeholder || ''"
+              [helpText]="field.helpText || ''"
+              [required]="field.validation?.required || false"
+              [readonly]="field.readonly || false"
+              [errors]="getFieldErrors(field.id)"
+              [formControlName]="field.id"
+            />
+          }
 
-        <!-- Number Input -->
-        <app-number-input
-          *ngIf="field.type === 'number'"
-          [id]="field.id"
-          [label]="field.label"
-          [placeholder]="field.placeholder || ''"
-          [helpText]="field.helpText || ''"
-          [required]="field.validation?.required || false"
-          [readonly]="field.readonly || false"
-          [min]="field.validation?.min || null"
-          [max]="field.validation?.max || null"
-          [errors]="getFieldErrors(field.id)"
-          [formControlName]="field.id"
-        />
+          @if (field.type === 'number') {
+            <app-number-input
+              [id]="field.id"
+              [label]="field.label"
+              [placeholder]="field.placeholder || ''"
+              [helpText]="field.helpText || ''"
+              [required]="field.validation?.required || false"
+              [readonly]="field.readonly || false"
+              [min]="field.validation?.min || null"
+              [max]="field.validation?.max || null"
+              [errors]="getFieldErrors(field.id)"
+              [formControlName]="field.id"
+            />
+          }
 
-        <!-- Textarea -->
-        <app-textarea-input
-          *ngIf="field.type === 'textarea'"
-          [id]="field.id"
-          [label]="field.label"
-          [placeholder]="field.placeholder || ''"
-          [helpText]="field.helpText || ''"
-          [required]="field.validation?.required || false"
-          [readonly]="field.readonly || false"
-          [rows]="field.rows || 4"
-          [errors]="getFieldErrors(field.id)"
-          [formControlName]="field.id"
-        />
+          @if (field.type === 'textarea') {
+            <app-textarea-input
+              [id]="field.id"
+              [label]="field.label"
+              [placeholder]="field.placeholder || ''"
+              [helpText]="field.helpText || ''"
+              [required]="field.validation?.required || false"
+              [readonly]="field.readonly || false"
+              [rows]="field.rows || 4"
+              [errors]="getFieldErrors(field.id)"
+              [formControlName]="field.id"
+            />
+          }
 
-        <!-- Checkbox -->
-        <app-checkbox-input
-          *ngIf="field.type === 'checkbox'"
-          [id]="field.id"
-          [label]="field.label"
-          [helpText]="field.helpText || ''"
-          [required]="field.validation?.required || false"
-          [errors]="getFieldErrors(field.id)"
-          [formControlName]="field.id"
-        />
+          @if (field.type === 'checkbox') {
+            <app-checkbox-input
+              [id]="field.id"
+              [label]="field.label"
+              [helpText]="field.helpText || ''"
+              [required]="field.validation?.required || false"
+              [errors]="getFieldErrors(field.id)"
+              [formControlName]="field.id"
+            />
+          }
 
-        <!-- Radio -->
-        <app-radio-input
-          *ngIf="field.type === 'radio'"
-          [id]="field.id"
-          [name]="field.name"
-          [label]="field.label"
-          [helpText]="field.helpText || ''"
-          [required]="field.validation?.required || false"
-          [options]="field.options || []"
-          [errors]="getFieldErrors(field.id)"
-          [formControlName]="field.id"
-        />
-      </div>
+          @if (field.type === 'radio') {
+            <app-radio-input
+              [id]="field.id"
+              [name]="field.name"
+              [label]="field.label"
+              [helpText]="field.helpText || ''"
+              [required]="field.validation?.required || false"
+              [options]="field.options || []"
+              [errors]="getFieldErrors(field.id)"
+              [formControlName]="field.id"
+            />
+          }
+        </div>
+      }
 
       <div class="form-actions">
         <button

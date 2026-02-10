@@ -12,12 +12,9 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-checkbox-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -39,13 +36,21 @@ import { CommonModule } from '@angular/common';
         />
         <label [for]="id()" class="checkbox-label">
           {{ label() }}
-          <span *ngIf="required()" class="required">*</span>
+          @if (required()) {
+            <span class="required">*</span>
+          }
         </label>
       </div>
-      <small *ngIf="helpText()" class="help-text">{{ helpText() }}</small>
-      <div *ngIf="showError()" class="error-message">
-        <small *ngFor="let error of errors()">{{ error }}</small>
-      </div>
+      @if (helpText()) {
+        <small class="help-text">{{ helpText() }}</small>
+      }
+      @if (showError()) {
+        <div class="error-message">
+          @for (error of errors(); track error) {
+            <small>{{ error }}</small>
+          }
+        </div>
+      }
     </div>
   `,
   styles: [

@@ -12,13 +12,11 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { SelectOption } from '@models/form-field.model';
 
 @Component({
   selector: 'app-radio-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -28,15 +26,17 @@ import { SelectOption } from '@models/form-field.model';
   ],
   template: `
     <div class="form-group">
-      <div *ngIf="label()" class="form-label">
-        {{ label() }}
-        <span *ngIf="required()" class="required">*</span>
-      </div>
+      @if (label()) {
+        <div class="form-label">
+          {{ label() }}
+          @if (required()) {
+            <span class="required">*</span>
+          }
+        </div>
+      }
       <div class="radio-group">
-        <div
-          *ngFor="let option of options()"
-          class="radio-wrapper"
-        >
+        @for (option of options(); track option.value) {
+        <div class="radio-wrapper">
           <input
             [id]="id() + '-' + option.value"
             type="radio"
@@ -52,11 +52,18 @@ import { SelectOption } from '@models/form-field.model';
             {{ option.label }}
           </label>
         </div>
+        }
       </div>
-      <small *ngIf="helpText()" class="help-text">{{ helpText() }}</small>
-      <div *ngIf="showError()" class="error-message">
-        <small *ngFor="let error of errors()">{{ error }}</small>
-      </div>
+      @if (helpText()) {
+        <small class="help-text">{{ helpText() }}</small>
+      }
+      @if (showError()) {
+        <div class="error-message">
+          @for (error of errors(); track error) {
+            <small>{{ error }}</small>
+          }
+        </div>
+      }
     </div>
   `,
   styles: [

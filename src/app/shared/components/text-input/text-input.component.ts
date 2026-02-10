@@ -12,12 +12,9 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-text-input',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -27,10 +24,14 @@ import { CommonModule } from '@angular/common';
   ],
   template: `
     <div class="form-group">
-      <label [for]="id()" *ngIf="label()" class="form-label">
-        {{ label() }}
-        <span *ngIf="required()" class="required">*</span>
-      </label>
+      @if (label()) {
+        <label [for]="id()" class="form-label">
+          {{ label() }}
+          @if (required()) {
+            <span class="required">*</span>
+          }
+        </label>
+      }
       <input
         [id]="id()"
         [type]="type()"
@@ -43,10 +44,16 @@ import { CommonModule } from '@angular/common';
         class="form-control"
         [class.error]="showError()"
       />
-      <small *ngIf="helpText()" class="help-text">{{ helpText() }}</small>
-      <div *ngIf="showError()" class="error-message">
-        <small *ngFor="let error of errors()">{{ error }}</small>
-      </div>
+      @if (helpText()) {
+        <small class="help-text">{{ helpText() }}</small>
+      }
+      @if (showError()) {
+        <div class="error-message">
+          @for (error of errors(); track error) {
+            <small>{{ error }}</small>
+          }
+        </div>
+      }
     </div>
   `,
   styles: [
