@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 
 @Directive({
   selector: '[appFocusInvalidField]',
-  standalone: true
 })
 export class FocusInvalidFieldDirective {
   #el = inject(ElementRef);

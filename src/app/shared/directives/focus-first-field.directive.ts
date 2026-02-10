@@ -3,7 +3,6 @@ import { AfterViewInit, Directive, ElementRef, inject } from '@angular/core';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[focusFirstField]',
-  standalone: true
 })
 export class FocusFirstFieldDirective implements AfterViewInit {
   #el = inject(ElementRef);
