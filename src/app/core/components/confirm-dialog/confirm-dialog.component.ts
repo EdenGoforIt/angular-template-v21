@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-confirm-dialog',
-  standalone: true,
   imports: [MatDialogModule, MatButtonModule],
   template: `
     <h2 mat-dialog-title>Confirm</h2>
