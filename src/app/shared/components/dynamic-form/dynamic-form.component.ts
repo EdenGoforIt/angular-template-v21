@@ -167,7 +167,7 @@ export class DynamicFormComponent {
   submitButtonText = input<string>('Submit');
   resetButtonText = input<string>('Reset');
 
-  formSubmit = output<any>();
+  formSubmit = output<Record<string, unknown>>();
   formReset = output<void>();
 
   form!: FormGroup;
@@ -187,7 +187,7 @@ export class DynamicFormComponent {
   }
 
   private buildForm(): void {
-    const formControls: any = {};
+    const formControls: Record<string, unknown> = {};
 
     this.fields().forEach((field) => {
       const validators = [];

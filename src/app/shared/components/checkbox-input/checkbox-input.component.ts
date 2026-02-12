@@ -1,9 +1,9 @@
 import {
   Component,
+  computed,
   input,
   output,
   signal,
-  effect,
   forwardRef,
 } from '@angular/core';
 import {
@@ -133,18 +133,12 @@ export class CheckboxInputComponent implements ControlValueAccessor {
   value = signal<boolean>(false);
   disabled = signal<boolean>(false);
   touched = signal<boolean>(false);
-  showError = signal<boolean>(false);
+  showError = computed(() => this.touched() && this.errors().length > 0);
 
   valueChange = output<boolean>();
 
   private onChange: (value: boolean) => void = () => {};
   onTouched: () => void = () => {};
-
-  constructor() {
-    effect(() => {
-      this.showError.set(this.touched() && this.errors().length > 0);
-    });
-  }
 
   writeValue(value: boolean): void {
     this.value.set(value || false);

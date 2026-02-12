@@ -1,9 +1,9 @@
 import {
   Component,
+  computed,
   input,
   output,
   signal,
-  effect,
   forwardRef,
 } from '@angular/core';
 import {
@@ -137,18 +137,12 @@ export class NumberInputComponent implements ControlValueAccessor {
   value = signal<number | null>(null);
   disabled = signal<boolean>(false);
   touched = signal<boolean>(false);
-  showError = signal<boolean>(false);
+  showError = computed(() => this.touched() && this.errors().length > 0);
 
   valueChange = output<number | null>();
 
   private onChange: (value: number | null) => void = () => {};
   onTouched: () => void = () => {};
-
-  constructor() {
-    effect(() => {
-      this.showError.set(this.touched() && this.errors().length > 0);
-    });
-  }
 
   writeValue(value: number | null): void {
     this.value.set(value);

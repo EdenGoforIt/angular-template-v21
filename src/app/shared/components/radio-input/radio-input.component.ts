@@ -1,9 +1,9 @@
 import {
   Component,
+  computed,
   input,
   output,
   signal,
-  effect,
   forwardRef,
 } from '@angular/core';
 import {
@@ -154,27 +154,21 @@ export class RadioInputComponent implements ControlValueAccessor {
   options = input<SelectOption[]>([]);
   errors = input<string[]>([]);
 
-  value = signal<any>(null);
+  value = signal<string | number>(null as unknown as string | number);
   disabled = signal<boolean>(false);
   touched = signal<boolean>(false);
-  showError = signal<boolean>(false);
+  showError = computed(() => this.touched() && this.errors().length > 0);
 
-  valueChange = output<any>();
+  valueChange = output<string | number>();
 
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: string | number) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor() {
-    effect(() => {
-      this.showError.set(this.touched() && this.errors().length > 0);
-    });
-  }
-
-  writeValue(value: any): void {
+  writeValue(value: string | number): void {
     this.value.set(value);
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: string | number) => void): void {
     this.onChange = fn;
   }
 
@@ -189,7 +183,7 @@ export class RadioInputComponent implements ControlValueAccessor {
     this.disabled.set(isDisabled);
   }
 
-  onRadioChange(value: any): void {
+  onRadioChange(value: string | number): void {
     this.value.set(value);
     this.onChange(value);
     this.valueChange.emit(value);

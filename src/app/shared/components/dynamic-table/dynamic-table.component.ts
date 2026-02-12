@@ -434,11 +434,11 @@ export class DynamicTableComponent {
 
   Math = Math;
 
-  filters: { [key: string]: any } = {};
+  filters: Record<string, string> = {};
   pageSize: number = 10;
 
-  rowSelect = output<any>();
-  rowAction = output<{ action: string; row: any }>();
+  rowSelect = output<Record<string, unknown>>();
+  rowAction = output<{ action: string; row: Record<string, unknown> }>();
 
   constructor() {
     effect(() => {
@@ -456,7 +456,7 @@ export class DynamicTableComponent {
     return Object.values(this.filters).some((value) => value);
   }
 
-  onFilterChange(column: string, value: any): void {
+  onFilterChange(column: string, value: string): void {
     this.tableStore.updateFilter(column, value);
   }
 
@@ -469,7 +469,7 @@ export class DynamicTableComponent {
     this.tableStore.updateSorting(column);
   }
 
-  formatCellValue(row: any, column: TableColumn): string {
+  formatCellValue(row: Record<string, unknown>, column: TableColumn): string {
     const value = row[column.key];
 
     if (column.formatter) {
@@ -477,17 +477,18 @@ export class DynamicTableComponent {
     }
 
     if (column.type === 'date' && value) {
-      return new Date(value).toLocaleDateString();
+      return new Date(value as string | number).toLocaleDateString();
     }
 
     if (column.type === 'boolean') {
       return value ? 'Yes' : 'No';
     }
 
-    return value ?? '';
+    if (value == null) return '';
+    return typeof value === 'object' ? JSON.stringify(value) : String(value);
   }
 
-  isRowSelected(row: any): boolean {
+  isRowSelected(row: Record<string, unknown>): boolean {
     return (
       this.tableStore
         .config()
@@ -502,7 +503,7 @@ export class DynamicTableComponent {
     return data.length > 0 && data.every((row) => this.isRowSelected(row));
   }
 
-  onSelectRow(row: any): void {
+  onSelectRow(row: Record<string, unknown>): void {
     this.tableStore.selectRow(row);
     this.rowSelect.emit(row);
   }
