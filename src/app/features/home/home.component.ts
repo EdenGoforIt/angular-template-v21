@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,11 +23,11 @@ import { SelectOption } from '@models/form-field.model';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  private fb = new FormBuilder();
+  private fb = inject(FormBuilder);
 
   userForm: FormGroup;
   submitting = signal<boolean>(false);
-  submittedData = signal<any>(null);
+  submittedData = signal<Record<string, unknown> | null>(null);
 
   genderOptions = signal<SelectOption[]>([
     { label: 'Male', value: 'male' },
